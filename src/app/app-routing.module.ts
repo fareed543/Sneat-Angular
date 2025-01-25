@@ -9,7 +9,7 @@ const routes: Routes = [
     pathMatch : 'full'
   },
   {
-    path : 'path',
+    path : 'auth',
     loadChildren : () => import('./authentication/authentication.module').then(m =>m.AuthenticationModule)
   }
 ];
