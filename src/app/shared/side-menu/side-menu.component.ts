@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-side-menu',
@@ -6,19 +6,55 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-menu.component.scss']
 })
 export class SideMenuComponent {
+  isMenuCollapsed = false;
+
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
+
+  toggleLayout() {
+    // Toggle the collapsed state
+    this.isMenuCollapsed = !this.isMenuCollapsed;
+
+    // Update the classes on the <html> tag based on the collapsed state
+    this.toggleClasses();
+  }
+
+  toggleClasses() {
+    // Access the <html> element (use ElementRef to get the native DOM element)
+    const htmlElement = document.documentElement;
+
+    if (this.isMenuCollapsed) {
+      // Add classes for the collapsed menu state
+      this.renderer.addClass(htmlElement, 'layout-navbar-fixed');
+      this.renderer.addClass(htmlElement, 'layout-compact');
+      this.renderer.addClass(htmlElement, 'layout-menu-fixed');
+      this.renderer.addClass(htmlElement, 'layout-menu-collapsed');
+
+      // Remove classes for expanded state
+      this.renderer.removeClass(htmlElement, 'layout-menu-expanded');
+    } else {
+      // Add classes for the expanded menu state
+      this.renderer.addClass(htmlElement, 'layout-navbar-fixed');
+      this.renderer.addClass(htmlElement, 'layout-compact');
+      this.renderer.addClass(htmlElement, 'layout-menu-fixed');
+
+      // Remove classes for collapsed state
+      this.renderer.removeClass(htmlElement, 'layout-menu-collapsed');
+    }
+  }
 
   menuItems = [
     {
       "label": "Dashboard",
       "icon": "bx bx-home-circle",
       "link": "index.html",
-      "submenu": [],
       "active": false
     },
     {
       "label": "Layouts",
       "icon": "bx bx-layout",
       "link": null,
+      "expanded": false,
+
       "submenu": [
         {
           "label": "Without menu",
@@ -206,4 +242,14 @@ export class SideMenuComponent {
       ]
     }
   ];
+
+  toggleMenu(item : any){
+    item.expanded = !item.expanded;
+  }
+
+  toggleSubmenu(item : any){
+    item.expanded = !item.expanded;
+  }
+  
+
 }
