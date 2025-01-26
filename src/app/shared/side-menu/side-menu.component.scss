@@ -1,0 +1,17 @@
+.menu-item {
+    cursor: pointer;
+  }
+  
+  .menu-item.active > .menu-link {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+  
+  .menu-sub {
+    margin-left: 20px;
+  }
+  
+  .menu-sub .menu-item {
+    font-size: 0.9rem;
+  }
+  
